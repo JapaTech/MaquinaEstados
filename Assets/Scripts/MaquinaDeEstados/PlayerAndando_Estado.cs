@@ -9,7 +9,7 @@ public class PlayerAndando_Estado : PlayerBase_Estado
 
     public override void AtualizaEstado()
     {
-        Debug.Log("Andando");
+        //Debug.Log("Andando");
         ChecaTrocaDeEstado();
         ctx.CalculoMovimentosX = ctx.InputsX * ctx.VelMovimento;
     }
@@ -17,8 +17,10 @@ public class PlayerAndando_Estado : PlayerBase_Estado
     public override void ChecaTrocaDeEstado()
     {
         if (ctx.InputsX == 0)
+        {
             TrocaEstados(fabrica.Parado());
-        if (ctx.PediuDash)
+        }
+        else if (ctx.PodeDarDash && ctx.PediuDash)
         {
             TrocaEstados(fabrica.Dash());
         }
@@ -27,7 +29,7 @@ public class PlayerAndando_Estado : PlayerBase_Estado
     public override void FinalizaEstado()
     {
         //Debug.Log("Finalizou Andar");
-        ctx.Rb.velocity = Vector2.zero;
+        //ctx.Rb.velocity = Vector2.zero;
     }
 
     public override void InicializaSubestado()
@@ -37,6 +39,6 @@ public class PlayerAndando_Estado : PlayerBase_Estado
 
     public override void InicializaEstado()
     {
-        Debug.Log("Entrou no andar");
+        //Debug.Log("Entrou no andar");
     }
 }

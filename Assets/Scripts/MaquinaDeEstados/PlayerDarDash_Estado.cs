@@ -11,6 +11,7 @@ public class PlayerDarDash_Estado : PlayerBase_Estado
     {
         if (!ctx.PodeDarDash)
         {
+            ctx.PediuDash = false;
             TrocaEstados(fabrica.Parado());
         }
         else
@@ -38,7 +39,7 @@ public class PlayerDarDash_Estado : PlayerBase_Estado
 
     public override void FinalizaEstado()
     {
-        ctx.Rb.velocity = Vector2.zero;
+        //ctx.Rb.velocity = Vector2.up;
         Debug.Log("Saiu Dash");
     }
 

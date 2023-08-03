@@ -37,10 +37,16 @@ public class PlayerCaindo_Estado : PlayerBase_Estado
 
     public override void InicializaSubestado()
     {
-        if (ctx.InputsX != 0)
+        if (ctx.PediuDash && !ctx.EstaDandoDash)
+        {
+            DefinaSubestado(fabrica.Dash());
+        }
+
+        else if (ctx.InputsX != 0)
         {
             DefinaSubestado(fabrica.Andando());
         }
+
         else if (ctx.InputsX == 0)
         {
             DefinaSubestado(fabrica.Parado());

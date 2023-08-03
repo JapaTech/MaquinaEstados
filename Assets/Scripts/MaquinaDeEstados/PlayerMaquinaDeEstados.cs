@@ -35,7 +35,7 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
     bool podeDarDash = true;
     bool estaDandoDash = false;
     [SerializeField] float tempoDoDash = 0.2f;
-    [SerializeField] float coolDownDoDash = 1.5f;
+    [SerializeField] float cooldownDoDash = 1.5f;
     [SerializeField] Transform dashPos;
 
     //Escada
@@ -180,7 +180,15 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
 
     public void StardDash_Crtn()
     {
-        StartCoroutine(Dash_Crtn(dashPos.position, tempoDoDash));
+        Debug.Log(podeDarDash);
+        if (podeDarDash && !estaDandoDash)
+        {
+            StartCoroutine(Dash_Crtn(dashPos.position, tempoDoDash));
+        }
+        else
+        {
+            pediuParaDarDash = false;
+        }
     }
 
     private IEnumerator Dash_Crtn(Vector2 dashPos, float duracao)
@@ -188,6 +196,7 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
         if (!estaDandoDash)
         {
             estaDandoDash = true;
+            podeDarDash = false;
             float tempo = 0;
             Vector2 posInicial = tr.position;
             Vector2 posFinal = dashPos;
@@ -195,16 +204,41 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
             
             while(tempo < duracao)
             {
-                Debug.Log("Está na courotine");
+                //Debug.Log("Está na courotine");
                 posAtual = Vector2.Lerp(posInicial, posFinal, tempo / duracao);
                 rb.MovePosition(posAtual);
                 tempo += Time.deltaTime;
                 //Debug.Log(posAtual);
                 yield return null;
             }
+           
             rb.MovePosition(posFinal);
         }
         estaDandoDash = false;
+        StartCoroutine(CooldownDash(estaNoChao));
+        Debug.Log("Saiu da courotine dash");
+    }
+
+    private IEnumerator CooldownDash(bool comecouDashDoChao)
+    {
+        WaitForSeconds cooldown = new WaitForSeconds(cooldownDoDash);
+
+        podeDarDash = false;
+        Debug.Log("Entrou no cooldown do dash");
+        if (comecouDashDoChao)
+        {
+            yield return cooldown;
+            pediuParaDarDash = false;
+            podeDarDash = true;
+        }
+        else
+        {
+            yield return cooldown;
+            yield return new WaitUntil(() => estaNoChao == true);
+            pediuParaDarDash = false;
+            podeDarDash = true;
+        }
+        Debug.Log("Saiu da cooldown dash");
     }
 
     void Anima()

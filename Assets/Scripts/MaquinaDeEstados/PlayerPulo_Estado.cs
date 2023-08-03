@@ -12,9 +12,11 @@ public class PlayerPulo_Estado : PlayerBase_Estado
 
     public override void InicializaEstado()
     {
-        Debug.Log("Pular");
+        //Debug.Log("Pular");
+        
         ctx.StartCoroutine("EstaNoPulo");
         ctx.CalculoMovimentosY = ctx.VelPulo;   
+
     }
 
     public override void AtualizaEstado()
@@ -32,8 +34,7 @@ public class PlayerPulo_Estado : PlayerBase_Estado
         else if (ctx.EstaPulando == false && ctx.NoChao == false)
         {
             //ctx.CalculoMovimentosY = ctx.Rb.velocity.y;
-            Debug.Log("No Ar");
-           
+            //Debug.Log("No Ar");
             TrocaEstados(fabrica.Caindo());
         }
     }
@@ -45,7 +46,13 @@ public class PlayerPulo_Estado : PlayerBase_Estado
 
     public override void InicializaSubestado()
     {
-        if (ctx.InputsX != 0)
+        if (ctx.PediuDash && !ctx.EstaDandoDash)
+        {
+            DefinaSubestado(fabrica.Dash());
+        }
+
+
+        else if (ctx.InputsX != 0)
         {
             DefinaSubestado(fabrica.Andando());
         }

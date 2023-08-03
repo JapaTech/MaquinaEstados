@@ -12,7 +12,6 @@ public class PlayerNoChao_Estado : PlayerBase_Estado
 
     public override void InicializaEstado()
     {
-        ctx.PodeDarDash = true;
         ctx.Rb.gravityScale = ctx.GravityScaleIni;
         //Debug.Log("Inicializou no chão");
     }

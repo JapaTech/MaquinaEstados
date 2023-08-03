@@ -24,6 +24,7 @@ public class PlayerAgacha_Estado : PlayerBase_Estado
 
     public override void FinalizaEstado()
     {
+        ctx.PediuDash = false;
         ctx.PediuPular = false;    
     }
 
