@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Coleta informações que determinam qual estado deve ser acionado
 public class PlayerMaquinaDeEstados : MonoBehaviour
 {
     //Componentes
@@ -9,7 +10,10 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
     Transform tr;
     Animator anim;
 
+    //Gravidade
     float gravityInicial;
+    
+    //Inputs
     Vector2 inputs;
 
     //Movimento no chão
@@ -47,7 +51,7 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
     PlayerBase_Estado estadoAtual;
     Player_StateFactory fabricaDeEstados;
 
-    //Getter & Setter
+    //Getters & Setters
     public PlayerBase_Estado EstadoAtual { get { return estadoAtual; } set { estadoAtual = value; } }
     public Rigidbody2D Rb { get { return rb; } set { rb = value; } }
     public Transform Tr { get { return tr; } set { tr = value; } }
@@ -69,14 +73,17 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
     public bool PediuDash { get { return pediuParaDarDash; } set { pediuParaDarDash = value; } }
     public bool DashPos { get { return dashPos; } }
 
-    // Start is called before the first frame update
     void Awake()
     {
+        //Acessar componentes
         tr = transform;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
+
+        //Set valor da gravidade inicial
         gravityInicial = rb.gravityScale;
 
+        //Cria fábrica de estado e define o estado inicial
         fabricaDeEstados = new Player_StateFactory(this);
         estadoAtual = fabricaDeEstados.NoChao();
         estadoAtual.InicializaEstado();
@@ -85,28 +92,34 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //Leitura dos inputs
         LeInputMovimento();
         LeInputSubirDescer();
         LeInputPulo();
-        VerificaSePodeSubir();
         LeInputAgachado();
         LeInputDash();
+        //Verifica se está em uma escada
+        VerificaSePodeSubir();
     }
 
     private void FixedUpdate()
     {
-        VerificaEstaNoChao();
+        //Função que atualiza os estados
         estadoAtual.UpdateEstados();
+
+        VerificaEstaNoChao();
         AplicaMovimento();
     }
 
     private void LateUpdate()
     {
+        //Vira o personagem para esquerda ou direita
         OlhaParaDirecao();
+        //Animaçies
         Anima();
     }
 
+    #region Detecção de Inputs
     void LeInputMovimento()
     {
         inputs.x = Input.GetAxis("Horizontal");
@@ -118,16 +131,11 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
             pediuPular = true;
     }
 
-    IEnumerator EstaNoPulo()
-    {
-        estaPulando = true;
-        yield return new WaitForSeconds(duracaoPulo);
-        estaPulando = false;
-        pediuPular = false;
-    }
-
     void LeInputDash()
     {
+        if (!podeDarDash)
+            return;
+
         if (Input.GetKeyDown(KeyCode.Q))
         {
             Debug.Log("Pediu dash");
@@ -148,13 +156,15 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
         inputs.y = Input.GetAxis("Vertical");
     }
 
+    #endregion
 
-    void OlhaParaDirecao()
+    //Corrotina para controlar o tempo que leva para o jogador chegar no ápice do pulo
+    IEnumerator EstaNoPulo()
     {
-        if (inputs.x != 0)
-            olhaDirecao.x = inputs.x;
-
-        tr.right = olhaDirecao;
+        estaPulando = true;
+        yield return new WaitForSeconds(duracaoPulo);
+        estaPulando = false;
+        pediuPular = false;
     }
 
     void VerificaEstaNoChao()
@@ -173,11 +183,20 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
             podeSubir = true;
     }
 
+    void OlhaParaDirecao()
+    {
+        if (inputs.x != 0)
+            olhaDirecao.x = inputs.x;
+
+        tr.right = olhaDirecao;
+    }
+
     void AplicaMovimento()
     {
         rb.velocity = calculoMovimentos;
     }
 
+    #region Dash
     public void StardDash_Crtn()
     {
         Debug.Log(podeDarDash);
@@ -191,6 +210,7 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
         }
     }
 
+    //Corrotina que controla o Dash
     private IEnumerator Dash_Crtn(Vector2 dashPos, float duracao)
     {
         if (!estaDandoDash)
@@ -204,27 +224,27 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
             
             while(tempo < duracao)
             {
-                //Debug.Log("Está na courotine");
                 posAtual = Vector2.Lerp(posInicial, posFinal, tempo / duracao);
                 rb.MovePosition(posAtual);
                 tempo += Time.deltaTime;
-                //Debug.Log(posAtual);
                 yield return null;
             }
-           
+            
             rb.MovePosition(posFinal);
         }
         estaDandoDash = false;
         StartCoroutine(CooldownDash(estaNoChao));
-        Debug.Log("Saiu da courotine dash");
+        //Debug.Log("Saiu da courotine dash");
     }
 
+    //Cooldown para o Dash
     private IEnumerator CooldownDash(bool comecouDashDoChao)
     {
+        estaDandoDash = false;
         WaitForSeconds cooldown = new WaitForSeconds(cooldownDoDash);
 
         podeDarDash = false;
-        Debug.Log("Entrou no cooldown do dash");
+        //Debug.Log("Entrou no cooldown do dash");
         if (comecouDashDoChao)
         {
             yield return cooldown;
@@ -238,9 +258,11 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
             pediuParaDarDash = false;
             podeDarDash = true;
         }
-        Debug.Log("Saiu da cooldown dash");
+        //Debug.Log("Saiu da cooldown dash");
     }
+    #endregion
 
+    //Seta as variáveis do animator
     void Anima()
     {
         anim.SetFloat("VelMovimento", Mathf.Abs(calculoMovimentos.x));
@@ -250,6 +272,8 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
         anim.SetBool("Escada", podeSubir);
     }
 
+
+    //Colisões que verificam se o jogador está numa escada
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Escada"))

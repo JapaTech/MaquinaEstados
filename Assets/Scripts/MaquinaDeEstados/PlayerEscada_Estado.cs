@@ -8,16 +8,18 @@ public class PlayerEscada_Estado : PlayerBase_Estado
        : base(_contextoAtual, _factory) {
         eUmEstadoRaiz = true;
         InicializaSubestado();
-            }
+        }
 
     public override void InicializaEstado()
     {
-        
+        MostraEstado.Instancia.MostraTextoEstado("Na Escada");
+        //"Desliga" o efeito gravidade sobre o jogador
         ctx.Rb.gravityScale = 0;
     }
 
     public override void AtualizaEstado()
     {
+        //Calcula o movimento no eixo Y do jogador na escada
         ctx.CalculoMovimentosY = ctx.InputsY * ctx.VelEscada;
         ChecaTrocaDeEstado();
     }
@@ -37,7 +39,9 @@ public class PlayerEscada_Estado : PlayerBase_Estado
 
     public override void FinalizaEstado()
     {
+        //"Retoma" o efeito da gravidade sobre o jogador
         ctx.Rb.gravityScale = ctx.GravityScaleIni;
+        //Impede que o jogador pule ao sair da escada
         ctx.PediuPular = false;
         Debug.Log("Finalizou Escada");
     }

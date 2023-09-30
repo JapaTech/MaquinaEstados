@@ -12,12 +12,15 @@ public class PlayerNoChao_Estado : PlayerBase_Estado
 
     public override void InicializaEstado()
     {
+        //Garante que o jogador tenha enquanto no chão
         ctx.Rb.gravityScale = ctx.GravityScaleIni;
-        //Debug.Log("Inicializou no chão");
+
+        MostraEstado.Instancia.MostraTextoEstado("No chão");
     }
 
     public override void AtualizaEstado()
     {
+        //Enquanto no chão, o jogador não é afetado por mudanças no eixo Y
         ctx.CalculoMovimentosY = 0;
         ChecaTrocaDeEstado();
     }

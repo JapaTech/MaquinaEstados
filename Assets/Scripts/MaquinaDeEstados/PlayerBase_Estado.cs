@@ -1,11 +1,22 @@
+//Classe base de todos os estados
+
 public abstract class PlayerBase_Estado
 {
+    //Se for um estado, true; se não, false
     protected bool eUmEstadoRaiz = false;
+
+    //Referência da máquina de estados
     protected PlayerMaquinaDeEstados ctx;
+
+    //Referência da fábrica (construtor) de estados
     protected Player_StateFactory fabrica;
+
+    //Referência para estado e subestado
     protected PlayerBase_Estado superEstadoAtual;
     protected PlayerBase_Estado subEstadoAtual;
 
+
+    //Construtor
     public PlayerBase_Estado(PlayerMaquinaDeEstados _contextoAtual, Player_StateFactory _factory)
     {
         ctx = _contextoAtual;

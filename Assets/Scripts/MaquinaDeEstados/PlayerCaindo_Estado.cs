@@ -13,11 +13,12 @@ public class PlayerCaindo_Estado : PlayerBase_Estado
 
     public override void InicializaEstado()
     {
-        ctx.CalculoMovimentosY = ctx.Rb.velocity.y;
+        MostraEstado.Instancia.MostraTextoEstado("Caindo");
     }
 
     public override void AtualizaEstado()
     {
+        //Calcula a gravidade
         ctx.CalculoMovimentosY = ctx.Rb.velocity.y;
         ChecaTrocaDeEstado();
     }

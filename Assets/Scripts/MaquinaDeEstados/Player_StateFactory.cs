@@ -1,13 +1,16 @@
-
+//Possui a referência de todos os Estados
 public class Player_StateFactory
 {
+    //Referência da máquina de estados
     PlayerMaquinaDeEstados contexto;
 
+    //Construtor
     public Player_StateFactory(PlayerMaquinaDeEstados _contextoAtual)
     {
         contexto = _contextoAtual;
     }
 
+    //Estados
     public PlayerBase_Estado NoChao()
     {
         return new PlayerNoChao_Estado(contexto, this);

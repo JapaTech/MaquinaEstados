@@ -12,9 +12,11 @@ public class PlayerPulo_Estado : PlayerBase_Estado
 
     public override void InicializaEstado()
     {
-        //Debug.Log("Pular");
-        
+        MostraEstado.Instancia.MostraTextoEstado("Pulando");
+
+        //Começa o pulo
         ctx.StartCoroutine("EstaNoPulo");
+        //Altera a velocidade para a do pulo
         ctx.CalculoMovimentosY = ctx.VelPulo;   
 
     }
@@ -33,8 +35,6 @@ public class PlayerPulo_Estado : PlayerBase_Estado
             TrocaEstados(fabrica.Escada());
         else if (ctx.EstaPulando == false && ctx.NoChao == false)
         {
-            //ctx.CalculoMovimentosY = ctx.Rb.velocity.y;
-            //Debug.Log("No Ar");
             TrocaEstados(fabrica.Caindo());
         }
     }

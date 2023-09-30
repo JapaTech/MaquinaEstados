@@ -9,15 +9,20 @@ public class PlayerDarDash_Estado : PlayerBase_Estado
 
     public override void InicializaEstado()
     {
+        MostraEstado.Instancia.MostraTextoSubestado("Dando dash");
+        
+        //Verifica se o dash está disponível
         if (!ctx.PodeDarDash)
         {
             ctx.PediuDash = false;
-            TrocaEstados(fabrica.Parado());
+            TrocaEstados(fabrica.Andando());
         }
         else
         {
             ctx.PediuDash = false;
+            //Zera a velocidade para não haver interferência
             ctx.Rb.velocity = Vector2.zero;
+            //Começa o dash
             ctx.StardDash_Crtn();
         }
     }
@@ -25,12 +30,14 @@ public class PlayerDarDash_Estado : PlayerBase_Estado
     public override void AtualizaEstado()
     {
         Debug.Log("Dando dash");
+        //Impede mudanças no eixo Y (como a gravidade)
         ctx.CalculoMovimentosY = 0;
         ChecaTrocaDeEstado();
     }
 
     public override void ChecaTrocaDeEstado()
     {
+        //Verifica se acabou de dar dash
         if(ctx.EstaDandoDash == false)
         {
             TrocaEstados(fabrica.Parado());
@@ -39,13 +46,12 @@ public class PlayerDarDash_Estado : PlayerBase_Estado
 
     public override void FinalizaEstado()
     {
-        //ctx.Rb.velocity = Vector2.up;
         Debug.Log("Saiu Dash");
     }
 
     public override void InicializaSubestado()
     {
-        //Debug.Log("Sub Dash");
+
     }
 
 }

@@ -9,8 +9,9 @@ public class PlayerAndando_Estado : PlayerBase_Estado
 
     public override void AtualizaEstado()
     {
-        //Debug.Log("Andando");
         ChecaTrocaDeEstado();
+
+        //Faz o cálculo de movimentos do jogador
         ctx.CalculoMovimentosX = ctx.InputsX * ctx.VelMovimento;
     }
 
@@ -28,17 +29,16 @@ public class PlayerAndando_Estado : PlayerBase_Estado
 
     public override void FinalizaEstado()
     {
-        //Debug.Log("Finalizou Andar");
-        //ctx.Rb.velocity = Vector2.zero;
+
     }
 
     public override void InicializaSubestado()
     {
-        //Debug.Log("Inicializou Andar");
+        
     }
 
     public override void InicializaEstado()
     {
-        //Debug.Log("Entrou no andar");
+        MostraEstado.Instancia.MostraTextoSubestado("Andando");
     }
 }

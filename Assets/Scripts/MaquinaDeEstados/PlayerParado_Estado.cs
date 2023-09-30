@@ -9,15 +9,12 @@ public class PlayerParado_Estado : PlayerBase_Estado
 
     public override void InicializaEstado()
     {
-        //Debug.Log("Inicializou Parar");
+        MostraEstado.Instancia.MostraTextoSubestado("Parado");
         ctx.CalculoMovimentosX = 0;
-        //ctx.Rb.velocity = Vector2.zero;
-        
     }
 
     public override void AtualizaEstado()
     {
-        //Debug.Log("Parado");
         ChecaTrocaDeEstado();
     }
 
@@ -29,7 +26,6 @@ public class PlayerParado_Estado : PlayerBase_Estado
        }
        else if (ctx.PodeDarDash && ctx.PediuDash)
        {
-            //Debug.Log("Entrou no dash do parado");
             TrocaEstados(fabrica.Dash());
             ctx.PediuDash = false;
        }
@@ -37,8 +33,7 @@ public class PlayerParado_Estado : PlayerBase_Estado
 
     public override void FinalizaEstado()
     {
-        //Debug.Log("Finalizou Parado");
-        //ctx.Rb.WakeUp();
+  
     }
 
     public override void InicializaSubestado()
