@@ -7,12 +7,23 @@ public class DeslocaPonto : MonoBehaviour
     [SerializeField] Transform posPlayer;
     [SerializeField] Transform posMax;
     Transform tr;
-    [SerializeField] Vector3 margem;
-    [SerializeField] Vector2 dimensoesRetangulo;
-    [SerializeField] LayerMask paredeDash;
+
+    [SerializeField] LayerMask parede;
+    private RaycastHit2D atingiuParede;
+    private RaycastHit2D proximoParede;
+    [SerializeField] private float margemParede = 0.25f;
+
+
+    [SerializeField] LayerMask chao;
+    private RaycastHit2D atingiuChao;
+    private RaycastHit2D proximoChao;
+    [SerializeField] private float altura = 1.64f;
+    [SerializeField] private float margemChao = 0.25f;
 
     Vector3 posinicial;
     bool podeMover;
+
+    [SerializeField] Vector2 dimensoesRetangulo;
 
     private void Start()
     {
@@ -22,20 +33,20 @@ public class DeslocaPonto : MonoBehaviour
 
     private void FixedUpdate()
     {
-        AfastaPonto();
- 
+        AfastaPontoChao();
+        AfastaPontoFrente();
     }
 
-    private void AfastaPonto()
+    private void AfastaPontoFrente()
     {
-        RaycastHit2D proximoParede = Physics2D.Raycast(tr.position, Vector3.right, 0.25f, paredeDash);
+        proximoParede = Physics2D.Raycast(tr.position, Vector3.right, margemParede, parede);
+
         if (proximoParede)
         {
             return; 
         }
 
-        RaycastHit2D atingiuParede;
-        atingiuParede = Physics2D.Raycast(posPlayer.position, tr.right, Vector2.Distance(tr.position, posPlayer.position), paredeDash);
+        atingiuParede = Physics2D.Raycast(posPlayer.position, tr.right, Vector2.Distance(tr.position, posPlayer.position), parede);
         if (atingiuParede)
         {
             tr.position =  atingiuParede.point;
@@ -46,26 +57,37 @@ public class DeslocaPonto : MonoBehaviour
         }
     }
 
-    /*private void MovePonto()
+    private void AfastaPontoChao()
     {
-        RaycastHit2D ray;
-        ray = Physics2D.BoxCast(posPonto.position + margem, dimensoesRetangulo, 0, tr.right, Vector2.Distance(tr.position + margem, posPonto.position + margem), paredeDash);
-        if(ray)
+        Vector3 teste = new Vector3();
+        float f = altura + margemChao;
+        
+
+        atingiuChao = Physics2D.Linecast(tr.position, tr.position + Vector3.down * altura, chao);
+        proximoChao = Physics2D.Raycast(tr.position, Vector3.down, altura + margemChao, chao);
+        
+
+        if (atingiuChao)
         {
-            Debug.Log("parede");
-            tr.localPosition = ray.point;
+
+            teste.y = Vector3.Distance(tr.position + Vector3.down * altura, atingiuChao.point);
+            tr.position += teste;
+        }
+        else if (proximoChao)
+        {
+            return;
         }
         else
         {
-            tr.localPosition = posInicial;
+            tr.localPosition = posinicial;
         }
-    }*/
+    }
+
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawRay(posPlayer.position, transform.right * Vector2.Distance(transform.position, posPlayer.position));
-        //Gizmos.DrawWireCube((posPonto.position + margem) + transform.right * Vector2.Distance(posPonto.position + margem, transform.position + margem), dimensoesRetangulo);
-        //Gizmos.DrawRay(posPonto.position, transform.right * Vector2.Distance(posPonto.position, transform.position));
+        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * altura);
     }
 }
