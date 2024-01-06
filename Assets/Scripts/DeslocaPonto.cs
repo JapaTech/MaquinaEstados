@@ -21,9 +21,8 @@ public class DeslocaPonto : MonoBehaviour
     [SerializeField] private float margemChao = 0.25f;
 
     Vector3 posinicial;
-    bool podeMover;
-
-    [SerializeField] Vector2 dimensoesRetangulo;
+    Vector3 aux;
+    Vector3 posFinal;
 
     private void Start()
     {
@@ -35,6 +34,7 @@ public class DeslocaPonto : MonoBehaviour
     {
         AfastaPontoChao();
         AfastaPontoFrente();
+        CalculaPosicao();
     }
 
     private void AfastaPontoFrente()
@@ -49,29 +49,54 @@ public class DeslocaPonto : MonoBehaviour
         atingiuParede = Physics2D.Raycast(posPlayer.position, tr.right, Vector2.Distance(tr.position, posPlayer.position), parede);
         if (atingiuParede)
         {
-            tr.position =  atingiuParede.point;
-        }
+            aux.x =  atingiuParede.point.x;
+        }/*
         else
         {
             tr.localPosition = posinicial;
         }
+        */
     }
 
     private void AfastaPontoChao()
-    {
-        Vector3 teste = new Vector3();
-        float f = altura + margemChao;
-        
+    {   
 
         atingiuChao = Physics2D.Linecast(tr.position, tr.position + Vector3.down * altura, chao);
-        proximoChao = Physics2D.Raycast(tr.position, Vector3.down, altura + margemChao, chao);
+        proximoChao = Physics2D.Linecast(tr.position, tr.position + Vector3.down * (altura + margemChao), chao);
         
 
         if (atingiuChao)
         {
+            aux = tr.position;
+            aux.y += Vector3.Distance(tr.position + Vector3.down * altura, atingiuChao.point);
+            
+        }
+        /*
+        else if (proximoChao)
+        {
+            return;
+        }
+        /*
+        else
+        {
+            tr.localPosition = posinicial;
+        }
+        */
+    }
 
-            teste.y = Vector3.Distance(tr.position + Vector3.down * altura, atingiuChao.point);
-            tr.position += teste;
+
+    private void CalculaPosicao()
+    {
+        if (atingiuChao || atingiuParede)
+        {
+            if (!atingiuChao)
+            {
+                aux.y = tr.position.y;
+            }
+
+            posFinal = aux;
+            Debug.Log(posFinal);
+            tr.position = posFinal;
         }
         else if (proximoChao)
         {

@@ -178,7 +178,6 @@ MonoBehaviour:
     m_Bits: 0
   altura: 1.64
   margemChao: 0.25
-  dimensoesRetangulo: {x: 0.35, y: 1.45}
 --- !u!1 &249875278
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,7 +465,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &701393246
 Transform:
   m_ObjectHideFlags: 0
@@ -499,25 +498,7 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths:
-  - m_Collider: {fileID: 701393249}
-    m_ColliderPaths:
-    - - X: 50000044
-        Y: 50000100
-      - X: 39999960
-        Y: 50000100
-      - X: 39999900
-        Y: 50000044
-      - X: 39999900
-        Y: -30000040
-      - X: 39999960
-        Y: -30000100
-      - X: 50000044
-        Y: -30000100
-      - X: 50000100
-        Y: -30000040
-      - X: 50000100
-        Y: 50000044
+  m_ColliderPaths: []
   m_CompositePaths:
     m_Paths:
     - - {x: 4.999975, y: -3.00001}
@@ -2616,8 +2597,8 @@ Tilemap:
   - first: {x: 6, y: -3, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 11
-      m_TileSpriteIndex: 11
+      m_TileIndex: 9
+      m_TileSpriteIndex: 9
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2676,8 +2657,8 @@ Tilemap:
   - first: {x: 6, y: -2, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 11
-      m_TileSpriteIndex: 11
+      m_TileIndex: 9
+      m_TileSpriteIndex: 9
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2736,8 +2717,8 @@ Tilemap:
   - first: {x: 6, y: -1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 11
-      m_TileSpriteIndex: 11
+      m_TileIndex: 9
+      m_TileSpriteIndex: 9
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2746,8 +2727,8 @@ Tilemap:
   - first: {x: 7, y: -1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 11
-      m_TileSpriteIndex: 11
+      m_TileIndex: 9
+      m_TileSpriteIndex: 9
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3103,11 +3084,11 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 6106597909d47804dad36a5aab5d99b8, type: 2}
   - m_RefCount: 14
     m_Data: {fileID: 11400000, guid: 0e4d7fffb7e9c434c9dad1d562df3bdf, type: 2}
-  - m_RefCount: 64
+  - m_RefCount: 68
     m_Data: {fileID: 11400000, guid: c541c54721a16c2469f4cc6e8d48c303, type: 2}
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: bd649b0ac389e614584644136213427d, type: 2}
-  - m_RefCount: 68
+  - m_RefCount: 64
     m_Data: {fileID: 11400000, guid: c2ee9b794942d86438549fd521ed5c44, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 10
@@ -3128,11 +3109,11 @@ Tilemap:
     m_Data: {fileID: 21300004, guid: 261212b977f594d5dbc48631a5c1295c, type: 3}
   - m_RefCount: 14
     m_Data: {fileID: 21300050, guid: 261212b977f594d5dbc48631a5c1295c, type: 3}
-  - m_RefCount: 64
+  - m_RefCount: 68
     m_Data: {fileID: 21300048, guid: 261212b977f594d5dbc48631a5c1295c, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 21300084, guid: 261212b977f594d5dbc48631a5c1295c, type: 3}
-  - m_RefCount: 68
+  - m_RefCount: 64
     m_Data: {fileID: 21300108, guid: 261212b977f594d5dbc48631a5c1295c, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 184
@@ -3207,18 +3188,6 @@ CompositeCollider2D:
       - X: 49999900
         Y: 50000044
       - X: 49999900
-        Y: -41
-      - X: 49999956
-        Y: -100
-      - X: 59999900
-        Y: -100
-      - X: 59999900
-        Y: -19999900
-      - X: 49999956
-        Y: -19999900
-      - X: 49999900
-        Y: -19999960
-      - X: 49999900
         Y: -29999900
       - X: -41
         Y: -29999900
@@ -3257,10 +3226,6 @@ CompositeCollider2D:
     - - {x: 10.999974, y: -10.00001}
       - {x: 10.999974, y: 5.00001}
       - {x: 4.99999, y: 4.999975}
-      - {x: 5.000025, y: -0.00001}
-      - {x: 5.99999, y: -0.0000394}
-      - {x: 5.999961, y: -1.99999}
-      - {x: 4.99999, y: -2.0000253}
       - {x: 4.999961, y: -2.99999}
       - {x: -0.00001, y: -3.0000253}
       - {x: -0.0000394, y: -4.99999}
@@ -4082,8 +4047,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   altura: 1.35
-  margemChao: 0.25
-  dimensoesRetangulo: {x: 0.35, y: 1.45}
+  margemChao: 0.3
 --- !u!1 &1861352782
 GameObject:
   m_ObjectHideFlags: 0
