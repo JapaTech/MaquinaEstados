@@ -12,7 +12,7 @@ public class PlayerDarDash_Estado : PlayerBase_Estado
         MostraEstado.Instancia.MostraTextoSubestado("Dando dash");
         
         //Verifica se o dash está disponível
-        if (!ctx.PodeDarDash)
+        if (!ctx.PodeDarDash && !ctx.EstaDandoDash)
         {
             ctx.PediuDash = false;
             TrocaEstados(fabrica.Andando());

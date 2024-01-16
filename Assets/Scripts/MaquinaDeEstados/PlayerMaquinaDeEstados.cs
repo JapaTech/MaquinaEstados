@@ -6,50 +6,51 @@ using UnityEngine;
 public class PlayerMaquinaDeEstados : MonoBehaviour
 {
     //Componentes
-    Rigidbody2D rb;
-    Transform tr;
-    Animator anim;
+    private Rigidbody2D rb;
+    private Transform tr;
+    private Animator anim;
+    [SerializeField] private TrailRenderer trailDash;
 
     //Gravidade
-    float gravityInicial;
-    
+    private float gravityInicial;
+
     //Inputs
-    Vector2 inputs;
+    private Vector2 inputs;
 
     //Movimento no chão
-    Vector2 calculoMovimentos;
-    Vector3 olhaDirecao;
-    [SerializeField] float velMovimento;
+    private Vector2 calculoMovimentos;
+    private Vector3 olhaDirecao;
+    [SerializeField] private float velMovimento;
 
     //Pulo
-    [SerializeField] Transform[] pontosChecagemChao = new Transform[2];
-    RaycastHit2D hitNoChao_rH;
-    [SerializeField] LayerMask solo;
-    bool pediuPular;
-    bool estaNoChao;
-    [SerializeField] float velPulo = 11f;
-    bool estaPulando;
-    [SerializeField] float duracaoPulo;
+    [SerializeField] private Transform[] pontosChecagemChao = new Transform[2];
+    private RaycastHit2D hitNoChao_rH;
+    [SerializeField] private LayerMask solo;
+    private bool pediuPular;
+    private bool estaNoChao;
+    [SerializeField] private float velPulo = 11f;
+    private bool estaPulando;
+    [SerializeField] private float duracaoPulo;
 
     //Agachar
-    bool agachado = false;
+    private bool agachado = false;
 
     //Dash
-    bool pediuParaDarDash = false;
-    bool podeDarDash = true;
-    bool estaDandoDash = false;
-    [SerializeField] float tempoDoDash = 0.2f;
-    [SerializeField] float cooldownDoDash = 1.5f;
-    [SerializeField] Transform dashPos;
+    private bool pediuParaDarDash = false;
+    private bool podeDarDash = true;
+    private bool estaDandoDash = false;
+    [SerializeField] private float tempoDoDash = 0.2f;
+    [SerializeField] private float cooldownDoDash = 1.5f;
+    [SerializeField] private Transform dashPos;
 
     //Escada
-    [SerializeField] float velEscada;
-    bool estaNaEscada;
-    bool podeSubir;
+    [SerializeField] private float velEscada;
+    private bool estaNaEscada;
+    private bool podeSubir;
 
     //Estados
-    PlayerBase_Estado estadoAtual;
-    Player_StateFactory fabricaDeEstados;
+    private PlayerBase_Estado estadoAtual;
+    private Player_StateFactory fabricaDeEstados;
 
     //Getters & Setters
     public PlayerBase_Estado EstadoAtual { get { return estadoAtual; } set { estadoAtual = value; } }
@@ -87,6 +88,7 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
         fabricaDeEstados = new Player_StateFactory(this);
         estadoAtual = fabricaDeEstados.NoChao();
         estadoAtual.InicializaEstado();
+        trailDash.emitting = false;
     }
 
     // Update is called once per frame
@@ -216,6 +218,7 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
         if (!estaDandoDash)
         {
             estaDandoDash = true;
+            trailDash.emitting = estaDandoDash;
             podeDarDash = false;
             float tempo = 0;
             Vector2 posInicial = tr.position;
@@ -233,6 +236,7 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
             rb.MovePosition(posFinal);
         }
         estaDandoDash = false;
+        trailDash.emitting = estaDandoDash;
         StartCoroutine(CooldownDash(estaNoChao));
         //Debug.Log("Saiu da courotine dash");
     }
