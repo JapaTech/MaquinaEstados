@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 //Coleta informações que determinam qual estado deve ser acionado
@@ -20,6 +19,7 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
     //Movimento no chão
     private Vector2 calculoMovimentos;
     private Vector3 olhaDirecao;
+    private bool estaViradoDireita;
     [SerializeField] private float velMovimento;
 
     //Pulo
@@ -52,12 +52,16 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
     private PlayerBase_Estado estadoAtual;
     private Player_StateFactory fabricaDeEstados;
 
+    //Camera
+    [SerializeField] private CameraSegueIsto cameraSegueIsto;
+
     //Getters & Setters
     public PlayerBase_Estado EstadoAtual { get { return estadoAtual; } set { estadoAtual = value; } }
     public Rigidbody2D Rb { get { return rb; } set { rb = value; } }
     public Transform Tr { get { return tr; } set { tr = value; } }
     public bool PediuPular { get { return pediuPular; } set { pediuPular = value; } }
     public bool EstaPulando { get { return estaPulando; } }
+    public bool EstaViradoDireita { get { return estaViradoDireita; } }
     public float CalculoMovimentosX { get { return calculoMovimentos.x; } set { calculoMovimentos.x = value; } }
     public float CalculoMovimentosY { get { return calculoMovimentos.y; } set { calculoMovimentos.y = value; } }
     public float VelMovimento { get { return velMovimento; } }
@@ -188,9 +192,22 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
     void OlhaParaDirecao()
     {
         if (inputs.x != 0)
+        {
             olhaDirecao.x = inputs.x;
+        }
 
         tr.right = olhaDirecao;
+
+        if(tr.right.x >= 0)
+        {
+            estaViradoDireita = true;
+            cameraSegueIsto.ComecaVirar();
+        }
+        else
+        {
+            estaViradoDireita = false;
+            cameraSegueIsto.ComecaVirar();
+        }
     }
 
     void AplicaMovimento()
