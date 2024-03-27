@@ -54,6 +54,7 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
 
     //Camera
     [SerializeField] private CameraSegueIsto cameraSegueIsto;
+    private float velocidadeQuedaDampYTreshold;
 
     //Getters & Setters
     public PlayerBase_Estado EstadoAtual { get { return estadoAtual; } set { estadoAtual = value; } }
@@ -95,6 +96,11 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
         trailDash.emitting = false;
     }
 
+    private void Start()
+    {
+        velocidadeQuedaDampYTreshold = GerenciadoCameras.instance.velocidadeQuedaEmYTreshold;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -115,6 +121,17 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
 
         VerificaEstaNoChao();
         AplicaMovimento();
+
+        if(rb.velocity.y < velocidadeQuedaDampYTreshold && !GerenciadoCameras.instance.EstaFazendoDamp && !GerenciadoCameras.instance.LerpedDoPlayerCaindo)
+        {
+            GerenciadoCameras.instance.LerpDamping(true);
+        }
+
+        if (rb.velocity.y >= 0f && !GerenciadoCameras.instance.EstaFazendoDamp && GerenciadoCameras.instance.LerpedDoPlayerCaindo)
+        {
+            GerenciadoCameras.instance.LerpedDoPlayerCaindo = false;
+            GerenciadoCameras.instance.LerpDamping(false);
+        }
     }
 
     private void LateUpdate()
@@ -152,9 +169,13 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
     void LeInputAgachado()
     {
         if (Input.GetButtonDown("Fire1"))
+        {
             agachado = true;
+        }
         if (Input.GetButtonUp("Fire1"))
+        {
             agachado = false;
+        }
     }
 
     void LeInputSubirDescer()
@@ -191,10 +212,12 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
 
     void OlhaParaDirecao()
     {
+        
         if (inputs.x != 0)
         {
             olhaDirecao.x = inputs.x;
         }
+        
 
         tr.right = olhaDirecao;
 
@@ -208,6 +231,27 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
             estaViradoDireita = false;
             cameraSegueIsto.ComecaVirar();
         }
+        
+        ChecaDirecao();
+    }
+
+    private void ChecaDirecao()
+    {
+        if(inputs.x > 0 && !estaViradoDireita)
+        {
+            Virar();
+        }
+        else if(inputs.x < 0 && estaViradoDireita)
+        {
+            Virar();
+        }
+    }
+
+    private void Virar()
+    {
+        tr.right = olhaDirecao;
+        estaViradoDireita = !estaViradoDireita;
+        cameraSegueIsto.ComecaVirar();
     }
 
     void AplicaMovimento()
