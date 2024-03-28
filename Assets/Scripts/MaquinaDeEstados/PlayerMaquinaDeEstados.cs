@@ -223,16 +223,18 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
 
         if(tr.right.x >= 0)
         {
-            estaViradoDireita = true;
-            cameraSegueIsto.ComecaVirar();
+            //estaViradoDireita = true;
+            ChecaDirecao();
+            //cameraSegueIsto.ComecaVirar();
         }
         else
         {
-            estaViradoDireita = false;
-            cameraSegueIsto.ComecaVirar();
+            //estaViradoDireita = false;
+            ChecaDirecao();
+            //cameraSegueIsto.ComecaVirar();
         }
         
-        ChecaDirecao();
+        
     }
 
     private void ChecaDirecao()

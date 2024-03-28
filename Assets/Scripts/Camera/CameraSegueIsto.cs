@@ -38,6 +38,7 @@ public class CameraSegueIsto : MonoBehaviour
 
     private IEnumerator FlipLerp()
     {
+        Debug.Log("Chamou");
         float rotInicial = tr.localEulerAngles.y;
         float rotFinalQuantidade = DeterminarRotacaoFinal();
         float rotY = 0f;
@@ -62,11 +63,11 @@ public class CameraSegueIsto : MonoBehaviour
 
         if (estaViradoParaDireita)
         {
-            return 360f;
+            return 0;
         }
         else
         {
-            return 0;
+            return 180;
         }
     }
 

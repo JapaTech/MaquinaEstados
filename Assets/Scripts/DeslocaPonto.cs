@@ -95,7 +95,7 @@ public class DeslocaPonto : MonoBehaviour
             }
 
             posFinal = aux;
-            Debug.Log(posFinal);
+            //Debug.Log(posFinal);
             tr.position = posFinal;
         }
         else if (proximoChao)
