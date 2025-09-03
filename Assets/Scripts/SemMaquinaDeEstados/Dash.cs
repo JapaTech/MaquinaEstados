@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DashTeste : MonoBehaviour
+public class Dash : MonoBehaviour
 {
     Rigidbody2D rb;
     Transform tr;
@@ -43,12 +43,12 @@ public class DashTeste : MonoBehaviour
     {
         if (pediuDash)
         {
-            StartCoroutine(Dash(dashPos.position, duracao));
+            StartCoroutine(Dashing(dashPos.position, duracao));
             pediuDash = false;
         }
     }
 
-    IEnumerator Dash(Vector2 dashPos, float duracao)
+    IEnumerator Dashing(Vector2 dashPos, float duracao)
     {
         if (!executandoDash)
         {
@@ -62,12 +62,10 @@ public class DashTeste : MonoBehaviour
             {
                 dashAtual = Vector2.Lerp(posInicial, posFinal, tempo / duracao);
                 rb.MovePosition(dashAtual);
-                tempo += Time.deltaTime;
-                Debug.Log(dashAtual);
+                tempo += Time.deltaTime;              
                 yield return null;
             }
-
-            Debug.Log("Saiu do while do dash");
+            //Debug.Log("Saiu do while do dash");
             rb.MovePosition(posFinal);
         }
         executandoDash = false;
