@@ -37,8 +37,7 @@ public class CameraSegueIsto : MonoBehaviour
     }
 
     private IEnumerator FlipLerp()
-    {
-        Debug.Log("Chamou");
+    {        
         float rotInicial = tr.localEulerAngles.y;
         float rotFinalQuantidade = DeterminarRotacaoFinal();
         float rotY = 0f;

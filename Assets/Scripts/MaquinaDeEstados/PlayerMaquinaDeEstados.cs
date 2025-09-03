@@ -161,7 +161,7 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Debug.Log("Pediu dash");
+            //Debug.Log("Pediu dash");
             pediuParaDarDash = true;
         }
     }
@@ -264,7 +264,6 @@ public class PlayerMaquinaDeEstados : MonoBehaviour
     #region Dash
     public void StardDash_Crtn()
     {
-        Debug.Log(podeDarDash);
         if (podeDarDash && !estaDandoDash)
         {
             StartCoroutine(Dash_Crtn(dashPos.position, tempoDoDash));

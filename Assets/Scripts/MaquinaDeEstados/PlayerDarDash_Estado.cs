@@ -29,7 +29,7 @@ public class PlayerDarDash_Estado : PlayerBase_Estado
 
     public override void AtualizaEstado()
     {
-        Debug.Log("Dando dash");
+        //Debug.Log("Dando dash");
         //Impede mudanças no eixo Y (como a gravidade)
         ctx.CalculoMovimentosY = 0;
         ChecaTrocaDeEstado();
@@ -46,7 +46,7 @@ public class PlayerDarDash_Estado : PlayerBase_Estado
 
     public override void FinalizaEstado()
     {
-        Debug.Log("Saiu Dash");
+  
     }
 
     public override void InicializaSubestado()

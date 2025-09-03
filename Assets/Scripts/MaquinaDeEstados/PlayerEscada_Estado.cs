@@ -32,7 +32,7 @@ public class PlayerEscada_Estado : PlayerBase_Estado
         }
         if (!ctx.NoChao && !ctx.PodeSubir)
         {
-            Debug.Log("Caindo");
+            //Debug.Log("Caindo");
             TrocaEstados(fabrica.Caindo());
         }
     }
