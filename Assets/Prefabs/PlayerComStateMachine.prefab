@@ -74,7 +74,6 @@ GameObject:
   - component: {fileID: 3257220261620692252}
   - component: {fileID: 3257220261620692192}
   - component: {fileID: 3257220261620692193}
-  - component: {fileID: 3257220261620692194}
   - component: {fileID: 3257220261620692253}
   m_Layer: 0
   m_Name: PlayerComStateMachine
@@ -167,30 +166,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.48}
   m_Size: {x: 1.14, y: 1.77}
   m_Direction: 0
---- !u!114 &3257220261620692194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3257220261620692198}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e9fc7749bfabfc47b49e00e95fccf73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velMovimento: 6.5
-  pontosChecagemChao:
-  - {fileID: 3257220261618112464}
-  - {fileID: 3257220261576565242}
-  solo:
-    serializedVersion: 2
-    m_Bits: 64
-  velPulo: 11
-  forcaDoDash: 50
-  tempoDoDash: 0.1
-  coolDownDoDash: 1
-  velEscada: 2.5
 --- !u!96 &3257220261620692253
 TrailRenderer:
   serializedVersion: 2
