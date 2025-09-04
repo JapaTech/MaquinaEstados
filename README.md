@@ -1,3 +1,4 @@
+#Estudo sobre Máquina de Estados
 Eu fiz este projeto para estudar a implentação e comportamento do padrão de design (design pattern) máquina de estados (state machine).
 
 Minhas princiapais referências foram os vídeos do canal [IHeartGameDev](https://www.youtube.com/c/iHeartGameDev/)
